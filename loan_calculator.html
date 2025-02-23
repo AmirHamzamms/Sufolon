@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Interest Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input, button { width: 100%; padding: 10px; margin: 5px 0; }
+        .result { margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Loan Interest Calculator</h2>
+        <label>Loan Amount:</label>
+        <input type="number" id="principal" placeholder="Enter amount">
+        
+        <label>Loan Start Date:</label>
+        <input type="date" id="startDate">
+        
+        <label>Loan End Date:</label>
+        <input type="date" id="endDate">
+        
+        <button onclick="calculateInterest()">Calculate</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateInterest() {
+            let principal = parseFloat(document.getElementById('principal').value);
+            let startDate = new Date(document.getElementById('startDate').value);
+            let endDate = new Date(document.getElementById('endDate').value);
+            
+            if (isNaN(principal) || !startDate || !endDate || startDate >= endDate) {
+                document.getElementById('result').innerHTML = "Please enter valid values.";
+                return;
+            }
+            
+            let interestRate = 24; // Annual Interest Rate in %
+            let days = (endDate - startDate) / (1000 * 60 * 60 * 24); // Difference in days
+            
+            let totalInterest = (principal * interestRate * days) / (365 * 100);
+            let totalPayment = principal + totalInterest;
+            
+            document.getElementById('result').innerHTML = `Total Interest: ${totalInterest.toFixed(2)} BDT <br>
+                                                           Total Payment: ${totalPayment.toFixed(2)} BDT`;
+        }
+    </script>
+</body>
+</html>
